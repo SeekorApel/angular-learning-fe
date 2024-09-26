@@ -1,0 +1,94 @@
+<div class="col-lg-12 pt-3">
+  <div class="card">
+    <div class="card-header">
+      <strong>View Plant</strong>
+    </div>
+    <div class="card-body">
+      <button class="btn btn-success mb-3" (click)="openModalAdd()">Add Plant</button>
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>No</th>
+            <th>ID Plant</th>
+            <th>Nama Plant</th>
+            <th>Aksi</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let plant of pagedPlants; let i = index">
+            <td>{{ (currentPage - 1) * pageSize + (i + 1) }}</td>
+            <td>{{ plant.plantId }}</td>
+            <td>{{ plant.plantName }}</td>
+            <td>
+              <button class="btn btn-primary btn-sm mr-2" (click)="openModalEdit(plant.plantId)">Edit</button>
+              <button class="btn btn-danger btn-sm" (click)="deleteData(plant.plantId)">Delete</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      
+      <!-- Pagination -->
+      <jw-pagination
+        [pageSize]="pageSize"
+        [(ngModel)]="currentPage"
+        (pageChanged)="onPageChanged($event)">
+      </jw-pagination>
+
+      
+    </div>
+  </div>
+</div>
+
+
+
+<!-- Modal add -->
+<div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="addModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addModalLabel">Add Plant</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form #addPlantForm="ngForm">
+          <div class="form-group">
+            <label for="plantName">Nama Plant</label>
+            <input type="text" class="form-control" id="plantName" name="plantName" required [(ngModel)]="newPlant.plantName">
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" (click)="addPlant()">Add Plant</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal edit -->
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addModalLabel">Edit Plant</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form #addPlantForm="ngForm">
+          <div class="form-group">
+            <label for="plantName">Nama Plant</label>
+            <input type="text" class="form-control" id="plantName" name="plantName" required [(ngModel)]="editPlant.plantName">
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" (click)="updatePlant()">Update Plant</button>
+      </div>
+    </div>
+  </div>
+</div>
